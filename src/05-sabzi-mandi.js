@@ -30,5 +30,35 @@
  *   // => { items: [], totalBill: 0 }
  */
 export function sabziMandiBill(shoppingList, priceList) {
-  // Your code here
+  // Validate input
+  if (!Array.isArray(shoppingList) || typeof priceList !== "object" || priceList === null) {
+    return { items: [], totalBill: 0 };
+  }
+
+  const items = [];
+  let totalBill = 0;
+
+  // Use for...of loop to process each item
+  for (const item of shoppingList) {
+    const { name, qty } = item;
+
+    // Check if sabzi is available in priceList
+    if (!(name in priceList)) {
+      continue; // Skip if not in priceList
+    }
+
+    const price = priceList[name];
+
+    // Check if price is more than Rs 80 per kg
+    if (price > 80) {
+      continue; // Skip if too expensive
+    }
+
+    // Valid item - add to bill
+    const cost = price * qty;
+    items.push({ name, qty, cost });
+    totalBill += cost;
+  }
+
+  return { items, totalBill };
 }
