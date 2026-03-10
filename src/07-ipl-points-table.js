@@ -37,20 +37,16 @@
  *   // Sorted: CSK(3), RCB(1), MI(0)
  */
 export function iplPointsTable(matches) {
-  // Validate input
   if (!Array.isArray(matches) || matches.length === 0) {
     return [];
   }
 
-  // Object accumulator to track points for each team
   const teamsData = {};
 
-  // Use for loop to process matches
   for (let i = 0; i < matches.length; i++) {
     const match = matches[i];
     const { team1, team2, result, winner } = match;
 
-    // Initialize team data if not exists
     if (!(team1 in teamsData)) {
       teamsData[team1] = { team: team1, played: 0, won: 0, lost: 0, tied: 0, noResult: 0, points: 0 };
     }
@@ -58,13 +54,10 @@ export function iplPointsTable(matches) {
       teamsData[team2] = { team: team2, played: 0, won: 0, lost: 0, tied: 0, noResult: 0, points: 0 };
     }
 
-    // Update played count for both teams
     teamsData[team1].played++;
     teamsData[team2].played++;
 
-    // Process result
     if (result === "win") {
-      // One team won, one lost
       if (winner === team1) {
         teamsData[team1].won++;
         teamsData[team1].points += 2;
@@ -75,13 +68,11 @@ export function iplPointsTable(matches) {
         teamsData[team1].lost++;
       }
     } else if (result === "tie") {
-      // Both teams get 1 point each
       teamsData[team1].tied++;
       teamsData[team1].points += 1;
       teamsData[team2].tied++;
       teamsData[team2].points += 1;
     } else if (result === "no_result") {
-      // Both teams get 1 point each (rain/bad light)
       teamsData[team1].noResult++;
       teamsData[team1].points += 1;
       teamsData[team2].noResult++;
@@ -89,10 +80,8 @@ export function iplPointsTable(matches) {
     }
   }
 
-  // Convert to array and sort
   const table = Object.values(teamsData);
 
-  // Sort: by points DESCENDING, then by team name ASCENDING
   table.sort((a, b) => {
     if (b.points !== a.points) {
       return b.points - a.points;

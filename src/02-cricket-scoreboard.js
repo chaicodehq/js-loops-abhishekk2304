@@ -45,7 +45,6 @@ export function cricketScoreboard(balls) {
   for (let i = 0; i < balls.length; i++) {
     const ball = balls[i];
 
-    // Break if 10 wickets reached (innings over)
     if (wickets === 10) {
       break;
     }

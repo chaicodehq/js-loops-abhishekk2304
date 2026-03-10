@@ -43,22 +43,17 @@ export function buildPlaylist(songs, maxDuration) {
   let totalDuration = 0;
   let i = 0;
 
-  // Use while loop
   while (i < songs.length) {
     const song = songs[i];
 
-    // Check if song duration is a valid positive number
     if (typeof song === "number" && Number.isFinite(song) && song > 0) {
-      // Check if adding this song would exceed maxDuration
       if (totalDuration + song <= maxDuration) {
         totalDuration += song;
         count++;
       } else {
-        // Stop - can't add this song
         break;
       }
     }
-    // If song is invalid, skip it and continue to next iteration
 
     i++;
   }

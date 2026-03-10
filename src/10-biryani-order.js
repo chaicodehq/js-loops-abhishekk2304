@@ -34,7 +34,6 @@
  *   // => { totalBatches: 3, totalPlates: 15, ordersProcessed: 2 }
  */
 export function biryaniBatchProcessor(orders) {
-  // Validate input
   if (!Array.isArray(orders) || orders.length === 0) {
     return { totalBatches: 0, totalPlates: 0, ordersProcessed: 0 };
   }
@@ -43,20 +42,16 @@ export function biryaniBatchProcessor(orders) {
   let totalPlates = 0;
   let ordersProcessed = 0;
 
-  // Process each order
   for (let i = 0; i < orders.length; i++) {
     const order = orders[i];
 
-    // Skip invalid orders (not positive integers)
     if (!Number.isInteger(order) || order <= 0) {
       continue;
     }
 
-    // Add to total plates
     totalPlates += order;
     ordersProcessed++;
 
-    // Use do...while loop to split order into batches (max 5 plates per batch)
     let remainingPlates = order;
     do {
       if (remainingPlates > 5) {

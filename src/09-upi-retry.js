@@ -35,7 +35,6 @@
  *   // => { attempts: 5, success: false, totalWaitTime: 15 }
  */
 export function upiRetry(outcomes) {
-  // Validate input
   if (!Array.isArray(outcomes) || outcomes.length === 0) {
     return { attempts: 0, success: false, totalWaitTime: 0 };
   }
@@ -44,20 +43,17 @@ export function upiRetry(outcomes) {
   let success = false;
   let totalWaitTime = 0;
   let attemptIndex = 0;
-  const waitTimes = [1, 2, 4, 8]; // exponential backoff: 1s, 2s, 4s, 8s
+  const waitTimes = [1, 2, 4, 8]; 
 
-  // Use do...while loop (always attempt at least once)
   do {
-    // Only process if we have an outcome for this attempt
     if (attemptIndex < outcomes.length) {
       attempts++;
       const outcome = outcomes[attemptIndex];
 
       if (outcome === "success") {
         success = true;
-        break; // Stop immediately on success
+        break; 
       } else {
-        // Failed - add wait time if not the last attempt and max 5 attempts not reached
         if (attempts < 5 && attemptIndex < waitTimes.length) {
           totalWaitTime += waitTimes[attemptIndex];
         }
@@ -65,7 +61,6 @@ export function upiRetry(outcomes) {
 
       attemptIndex++;
     } else {
-      // No more outcomes to process
       break;
     }
   } while (attempts < 5);
