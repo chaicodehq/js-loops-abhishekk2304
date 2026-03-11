@@ -47,6 +47,7 @@ export function sabziMandiBill(shoppingList, priceList) {
     const price = priceList[name];
 
     if (price > 80) {
+      continue; // Skip if too expensive
     }
 
     const cost = price * qty;
